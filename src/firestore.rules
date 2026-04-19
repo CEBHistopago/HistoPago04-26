@@ -1,0 +1,65 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+  
+    // --- Funciones de Ayuda ---
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // --- REGLA MAESTRA PARA ADMINISTRADORES ---
+    match /{document=**} {
+      allow read, write: if isAdmin();
+    }
+
+    // Regla necesaria para permitir consultas de grupo (collectionGroup) en 'sales' para administradores
+    match /{path=**}/sales/{saleId} {
+      allow read: if isAdmin();
+    }
+
+    // --- Reglas para Clientes y Comercios ---
+    
+    match /vendors/{vendorId} {
+      allow get: if isSignedIn() && (isOwner(vendorId) || isAdmin());
+      allow update: if isSignedIn() && isOwner(vendorId);
+      allow create, delete: if false;
+    }
+    
+    match /vendors/{vendorId}/{subcollection}/{docId} {
+      allow read, create, update: if isSignedIn() && (isOwner(vendorId) || isAdmin());
+      allow delete: if isAdmin();
+    }
+    
+    match /customer_index/{customerId} {
+      allow read, write: if isSignedIn();
+    }
+    
+    match /customers/{customerId} {
+      allow read: if isSignedIn();
+      allow update, create: if isSignedIn() && isOwner(customerId);
+      allow delete: if false;
+    }
+
+    match /admins/{adminId} {
+        allow read, write: if isAdmin();
+    }
+
+    match /settings/{settingId} {
+        allow read, write: if isAdmin();
+    }
+
+    match /fcm_token_registry/{tokenId} {
+        allow read: if isSignedIn();
+        allow write: if false;
+    }
+  }
+}

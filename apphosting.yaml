@@ -1,0 +1,26 @@
+# Settings to manage and configure a Firebase App Hosting backend.
+# https://firebase.google.com/docs/app-hosting/configure
+
+# This is required for login and other public-facing API endpoints.
+public: true
+
+runConfig:
+  # Increase this value if you'd like
+  minInstances: 0
+  maxInstances: 10
+  concurrency: 1000
+
+# Serve static files from the 'public' directory
+staticRouting:
+  - directory: public
+    public: true
+
+# This is the crucial part that was missing.
+# It tells App Hosting to send all non-static requests to the Next.js server.
+rewrites:
+  - source: "**"
+    run:
+      serviceId: "default"
+      # The region is optional, but good practice.
+      # It should match the region of your App Hosting backend.
+      # region: us-central1

@@ -1,0 +1,45 @@
+'use server';
+// IMPORTANT: This file loads all flows so that they can be discovered by Genkit.
+// Each flow file should be imported here.
+
+import './flows/customer-history-flow';
+import './flows/summarize-clients-flow';
+import './flows/send-reminder-email-flow';
+import './flows/send-reminder-sms-flow';
+import './flows/get-vendors-flow';
+import './flows/update-vendor-subscription-flow';
+import './flows/update-vendor-profile-flow';
+import './flows/create-subscription-payment-flow';
+import './flows/admin-reports-flow';
+import './flows/vendor-sales-flow';
+import './flows/vendor-profile-flow';
+import './flows/dashboard-stats-flow';
+import './flows/create-customer-flow';
+import './flows/get-customer-by-id-flow';
+import './flows/find-customer-globally-flow';
+import './flows/pending-payments-flow';
+import './flows/verify-identity-flow';
+import './flows/get-customer-count-flow';
+import './flows/bulk-sales-flow';
+import './flows/bulk-payments-flow';
+import './flows/get-import-reports-flow';
+import './flows/report-subscription-payment-flow';
+import './flows/run-collections-flow';
+import './flows/mailer-flow';
+import './flows/email-templates-flow';
+import './flows/send-general-sms-flow';
+import './flows/daily-reports-flow';
+import './flows/dashboard-reports-flow';
+import './flows/generate-invoice-flow';
+import './flows/get-invoices-flow';
+import './flows/get-billing-summary-flow';
+import './flows/send-whatsapp-flow';
+import './flows/generate-api-key-flow';
+import './flows/save-fcm-token-flow';
+import './flows/send-push-notification-flow';
+import './flows/remove-fcm-token-flow';
+import './flows/get-collection-summary-flow';
+import './flows/confirm-pending-sales-flow';
+import './flows/send-manual-reminder-flow';
+import './flows/get-collection-management-stats-flow';
+import './flows/get-platform-stats-flow';
